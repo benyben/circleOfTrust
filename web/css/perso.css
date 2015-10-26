@@ -1,0 +1,12 @@
+#connectedAs{
+    color: cornflowerblue;
+    padding: 20px;
+    font-size: medium;
+    font-weight:bold ;
+
+}
+/* div pour contenir les liens du menu*/
+.headerDiv{
+    background-color: #666666;
+    min-height: 50px;
+}

@@ -1,0 +1,3 @@
+gallery_home:
+    path:     /
+    defaults: { _controller: BenGalleryBundle:Gallery:index }

@@ -1,0 +1,3 @@
+ben_tchat_homepage:
+    path:     /tchat
+    defaults: { _controller: BenTchatBundle:Tchat:index }

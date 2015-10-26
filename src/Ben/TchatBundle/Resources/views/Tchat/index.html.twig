@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+
+{% block content %}
+
+    <h1>Le tchat</h1>
+    <div id="tchat">
+            {% for post in tchatArray %}
+            <p>pseudo :{{ post.pseudo }} / {{ post.content }} / le {{ post.date|date }}</p>
+            {% endfor %}
+    </div>
+{% endblock %}

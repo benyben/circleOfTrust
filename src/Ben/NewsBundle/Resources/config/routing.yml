@@ -1,0 +1,9 @@
+news_home:
+    path:     /
+    defaults: { _controller: BenNewsBundle:News:index }
+
+news_add:
+    path: /addPost
+    defaults: {_controller: BenNewsBundle:News:addPost}
+
+

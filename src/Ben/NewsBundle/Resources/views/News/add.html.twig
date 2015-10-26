@@ -1,0 +1,92 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            {% block news %}
+                <h2>News</h2>
+                <hr>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                    Ajouter une nouvelle
+                </button>
+
+
+                <!-- Modal -->
+                <form class="modal-form" action="{{ path('news_add') }}" method="post">
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                </div>
+
+                                {{ form(form) }}
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                    <button type="submit" id="submit-modal" class="btn btn-primary">Enregistrer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="postsList">
+                    {% for post in postsArray|reverse %}
+                        <div id="postAdded"></div>
+                        {{ post.title }} : {{ post.content }}: {{ post.date|date('d/m/Y') }}
+                        <hr>
+                    {% endfor %}
+
+                </div>
+            {% endblock %}
+
+
+        </div>
+        <div class="col-sm-4">
+            {% block tchat %}
+                <h2>Tchat</h2>
+                <hr>
+            {% endblock %}
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(function () {
+
+
+
+//twitter bootstrap script
+            $('form').submit(function () {
+                        var $title = $('#form_title').val();
+                        var $content = $('#form_content').val();
+
+
+                        $.ajax({
+                            type: $('form').attr('method'),
+                            url: $('form').attr('action'),
+                            data: $('form').serialize(),
+                            success: function (data, status) {
+
+                                $("#postAdded").append("Nouveau message :"+ $title + " : "+  $content);
+
+                                $('#myModal').modal('hide');
+
+                            }
+                        });
+
+
+                        return false; // ajax used, block the normal submit
+
+
+                    }
+            );
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+  {% block header %}
+      <ul class="bxslider">
+          <li><img src="{{asset('slider/img/photo1.jpg')}}" /></li>
+          <li><img src="{{asset('slider/img/photo2.jpg')}}" /></li>
+          <li><img src="{{asset('slider/img/photo3.jpg')}}"/></li>
+      </ul>
+  {% endblock %}
+
+{% block content %}
+
+    <h2>Bienvenue sur le site de la famille</h2>
+    <p>Vous pourrez partager des photos, des news et gérer le calendrier de présence de carnac.</p>
+{% endblock %}
