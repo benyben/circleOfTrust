@@ -5,4 +5,14 @@
 
     <h1>C'est la galerie de photos !!!</h1>
     {{ form(form) }}
+    
+    
+    <h2>Les photos</h2>
+    {% for photo in photos %}
+        <div>
+            <img src="{{ asset(media.uploadDir ~'/'~ photo.url) }}" alt="{{ photo.alt }}"/>
+            <hr>
+        </div>
+
+{% endfor %}
 {% endblock %}
