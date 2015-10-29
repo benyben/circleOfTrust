@@ -17,8 +17,6 @@ class GalleryController extends Controller
 
         if($form->handleRequest($request)->isValid()){
 
-            $media->upload();
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($media);
             $em->flush();

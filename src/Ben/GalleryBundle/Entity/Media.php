@@ -23,9 +23,9 @@ class Media
     private $id;
 
     /**
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="extension", type="string", length=255)
      */
-    private $url;
+    private $extension;
 
     /**
      * @ORM\Column(name="alt", type="string", length=255)
@@ -37,42 +37,102 @@ class Media
      */
     private $file;
 
+
+    private $tempFilename;
+
     public function getFile()
     {
         return $this->file;
     }
 
-    public function setFile(UploadedFile $file = null)
+    public function setFile(UploadedFile $file)
     {
+
         $this->file = $file;
+
+        //verif si déjà un fichier pour cette entité
+        if(null !== $this->extension){
+            $this->tempFilename = $this->extension;
+
+            $this->extension = null;
+            $this->alt = null;
+        }
+
     }
 
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preLoad(){
+        if(null === $this->file){
+            return;
+        }
+
+        //récupération de l'extension
+        $this->extension = $this->file->guessExtension();
+
+        //récupération de l'alt
+        $this->alt = $this->file->getClientOriginalName();
+        
+    }
+
+
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
     public function upload(){
         if(null === $this->file){
             return;
         }
 
-        //nom du fichier
-       $name = $this->file->getClientOriginalName();
+        //si ancien fichier on le supprime
+        if(null !== $this->tempFilename){
+            $oldFile = $this->getUploadRootDir().'/' .$this->id .'.'. $this->tempFilename;
+            if (file_exists($oldFile)){
+                unlink($oldFile);
+            }
+        }
 
-        //déplacement du fichier dans le repertoire
-        $this->file->move($this->getUploadRootDir(),$name);
-
-        //sauvgarde de l'url
-        $this->url = $name;
-
-        //définition du alt
-        $this->alt = $name;
-
+        //déplacement du fichier
+        $this->file->move(
+            $this->getUploadRootDir(),
+            $this->id .'.'. $this->extension
+        );
     }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUpload(){
+        //sauvegarde temporaire du nom du fichier
+        $this->tempFilename = $this->getUploadRootDir() .'/'. $this->id .'.'. $this->extension;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload(){
+        if(file_exists($this->tempFilename)){
+            unlink($this->tempFilename);
+        }
+    }
+
+
 
     public function getUploadDir(){
         //chemin relatif par rapport au dossier web
         return 'uploads/media';
     }
 
-    protected function getUploadRootDir(){
-        return __DIR__.'/../../../../web/'. $this->getUploadDir();
+    public function getUploadRootDir(){
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getWebPath(){
+        return $this->getUploadRootDir().'/'.$this->getId().'.'.$this->getextension();
     }
 
 
@@ -87,27 +147,27 @@ class Media
     }
 
     /**
-     * Set url
+     * Set extension
      *
-     * @param string $url
+     * @param string $extension
      *
      * @return Media
      */
-    public function setUrl($url)
+    public function setextension($extension)
     {
-        $this->url = $url;
+        $this->extension = $extension;
 
         return $this;
     }
 
     /**
-     * Get url
+     * Get extension
      *
      * @return string
      */
-    public function getUrl()
+    public function getextension()
     {
-        return $this->url;
+        return $this->extension;
     }
 
     /**
@@ -133,6 +193,7 @@ class Media
     {
         return $this->alt;
     }
+
 
 
 }

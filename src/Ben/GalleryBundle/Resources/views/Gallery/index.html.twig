@@ -10,9 +10,10 @@
     <h2>Les photos</h2>
     {% for photo in photos %}
         <div>
-            <img src="{{ asset(media.uploadDir ~'/'~ photo.url) }}" alt="{{ photo.alt }}"/>
+            <img src="{{ asset(media.uploadDir ~ '/' ~ photo.id ~ '.' ~ photo.extension) }}" alt="{{ photo.alt }}"/>
             <hr>
         </div>
+
 
 {% endfor %}
 {% endblock %}
