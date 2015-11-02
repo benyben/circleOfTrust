@@ -1,19 +1,72 @@
 {% extends '::base.html.twig' %}
 
 
+    {% block stylesheets %}
+        {{ parent() }}
+
+        {% stylesheets
+        'jqcoolgallery/css/*'
+
+        filter='cssrewrite' output='css/compiled/app2.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+
+    {% endblock %}
+
+
 {% block content %}
 
     <h1>C'est la galerie de photos !!!</h1>
     {{ form(form) }}
-    
-    
+
+
     <h2>Les photos</h2>
-    {% for photo in photos %}
-        <div>
-            <img src="{{ asset(media.uploadDir ~ '/' ~ photo.id ~ '.' ~ photo.extension) }}" alt="{{ photo.alt }}"/>
-            <hr>
-        </div>
 
 
-{% endfor %}
+    <div id="gallery" class="demo">
+        <ul class="jqcg-gallery" style="opacity:0;">
+
+            <li data-title="Gallery 1" data-desc="Caption for Gallery 1">
+                <img src="#" data-desc="Gallery 1" alt=""/>
+
+                <ul class="jqcg-viewer-slides">
+                    {% for photo in photos %}
+                    <li>
+                        <img src="{{ asset(media.uploadDir ~ '/' ~ photo.id ~ '.' ~ photo.extension) }}"
+                            />
+
+                        <div class="caption">This is the description for <strong>{{ photo.alt }}</strong>.</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            </li>
+
+        </ul>
+    </div>
+
+
+
+
 {% endblock %}
+
+
+
+
+
+
+            {% block javascripts %}
+                {{ parent() }}
+                {% javascripts
+                'jqcoolgallery/js/*'
+
+                output='js/compiled/app.js' %}
+                <script src="{{ asset_url }}"></script>
+                <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+
+                {% endjavascripts %}
+
+
+            {% endblock %}

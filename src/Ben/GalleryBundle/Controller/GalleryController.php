@@ -6,6 +6,7 @@ use Ben\GalleryBundle\Entity\Media;
 use Ben\GalleryBundle\Form\MediaType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GalleryController extends Controller
 {
@@ -25,10 +26,11 @@ class GalleryController extends Controller
             }
 
 
-        //Récupération des photos
-        $repo = $this->getDoctrine()->getRepository('BenGalleryBundle:Media');
-        $photos = $repo->findAll();
 
+
+        //Récupération des photos
+        $category = $this->getDoctrine()->getRepository('BenGalleryBundle:Category')->find($id =1);
+        $photos = $category->getMedias();
 
         return $this->render('BenGalleryBundle:Gallery:index.html.twig',array(
             'form' => $form->createView(),
@@ -37,5 +39,30 @@ class GalleryController extends Controller
             ));
     }
 
+
+    public function editAction($id,Request $request){
+        $em = $this->getDoctrine()->getManager();
+
+        //récupération de la catégorie
+
+        $category = $em->getRepository('BenGalleryBundle:Category')->find($id);
+
+        if (null === $category){
+            throw new NotFoundHttpException("L'annonce d'id " .id." n'existe pas");
+        }
+
+        //récupération de tous les médias
+        $listMedias = $em->getRepository('BenGalleryBundle:Media')->findAll();
+
+        foreach ($listMedias as $media){
+            $category->addMedia($media);
+
+
+        }
+
+        $em->flush();
+
+       return $this->redirect('gallery_home');
+    }
 
 }

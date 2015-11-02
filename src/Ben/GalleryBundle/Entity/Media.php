@@ -33,9 +33,12 @@ class Media
     private $alt;
 
     /**
+     * @Assert\Image()
      * @var UploadedFile file
      */
     private $file;
+
+
 
 
     private $tempFilename;

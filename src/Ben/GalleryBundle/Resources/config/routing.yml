@@ -1,3 +1,7 @@
 gallery_home:
     path:     /
     defaults: { _controller: BenGalleryBundle:Gallery:index }
+
+gallery_edit:
+    path:     /edit/{id}
+    defaults: { _controller: BenGalleryBundle:Gallery:edit }
