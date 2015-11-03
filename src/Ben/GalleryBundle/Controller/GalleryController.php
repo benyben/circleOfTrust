@@ -25,17 +25,19 @@ class GalleryController extends Controller
             return $this->redirectToRoute('gallery_home');
             }
 
+        $category = $this->getDoctrine()->getRepository('BenGalleryBundle:Category');
+        $categories = $category->findAll();
 
 
 
-        //Récupération des photos
-        $category = $this->getDoctrine()->getRepository('BenGalleryBundle:Category')->find($id =1);
-        $photos = $category->getMedias();
+
+
 
         return $this->render('BenGalleryBundle:Gallery:index.html.twig',array(
             'form' => $form->createView(),
             'media' => $media,
-            'photos' =>$photos
+            'categories' => $categories
+
             ));
     }
 

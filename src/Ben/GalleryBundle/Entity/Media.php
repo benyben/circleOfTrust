@@ -5,6 +5,7 @@ namespace Ben\GalleryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Media
@@ -39,6 +40,14 @@ class Media
     private $file;
 
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Ben\GalleryBundle\Entity\Category", cascade={"persist"})
+     */
+    private $categories;
+
+    public function __construct(){
+        $this->categories = new ArrayCollection();
+    }
 
 
     private $tempFilename;
@@ -197,6 +206,24 @@ class Media
         return $this->alt;
     }
 
+
+
+
+    public function addCategories(Category $category){
+        $this->categories[] = $category;
+        return $this;
+    }
+
+    public function removedCategory(Category $category){
+        $this->categories->removeElement($category);
+    }
+
+
+
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 
 
 }

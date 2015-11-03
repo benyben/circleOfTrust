@@ -25,23 +25,16 @@
 
     <div id="gallery" class="demo">
         <ul class="jqcg-gallery" style="opacity:0;">
-
+{% for category in categories %}
             <li data-title="Gallery 1" data-desc="Caption for Gallery 1">
-                <img src="#" data-desc="Gallery 1" alt=""/>
+                <img src="#" data-desc="" alt="{{ category.name }}"/>
 
                 <ul class="jqcg-viewer-slides">
-                    {% for photo in photos %}
-                    <li>
-                        <img src="{{ asset(media.uploadDir ~ '/' ~ photo.id ~ '.' ~ photo.extension) }}"
-                            />
 
-                        <div class="caption">This is the description for <strong>{{ photo.alt }}</strong>.</div>
-                    </li>
-                    {% endfor %}
                 </ul>
 
             </li>
-
+{% endfor %}
         </ul>
     </div>
 

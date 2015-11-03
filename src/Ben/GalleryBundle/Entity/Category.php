@@ -3,7 +3,7 @@
 namespace Ben\GalleryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Category
@@ -30,14 +30,7 @@ class Category
     private $name;
 
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Ben\GalleryBundle\Entity\Media", cascade={"persist"})
-     */
-    private $medias;
 
-public function __construct(){
-    $this->medias = new ArrayCollection();
-}
 
     /**
      * Get id
@@ -73,20 +66,5 @@ public function __construct(){
         return $this->name;
     }
 
-    public function addMedia(Media $media){
-        $this->medias[] = $media;
-        return $this;
-    }
-
-    public function removedMedia(Media $media){
-        $this->medias->removeElement($media);
-          }
-
-
-
-    public function getMedias()
-    {
-        return $this->medias;
-    }
 }
 

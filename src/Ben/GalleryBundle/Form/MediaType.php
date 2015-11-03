@@ -16,8 +16,13 @@ class MediaType extends AbstractType
     {
         $builder
             ->add('file','file')
-            ->add('Enregistrer','submit')
-           ;
+            ->add('categories','entity',array(
+                'class'    => 'BenGalleryBundle:Category',
+                'property' => 'name',
+                'multiple' => true
+            ))
+            ->add('Enregistrer', 'submit')
+        ;
     }
     
     /**
