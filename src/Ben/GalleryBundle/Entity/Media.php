@@ -13,7 +13,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Ben\GalleryBundle\Entity\MediaRepository")
- * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
 class Media

@@ -14,6 +14,13 @@ class MediaRepository extends EntityRepository
 {
     public function findMediasByCategory()
     {
-        return ;
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('m')
+            ->from('BenGalleryBundle:Media', 'm')
+            ->innerJoin('m.categories', 'c')
+            ->where('c.id = 1')
+            ->getQuery()
+            ->getResult();
     }
 }
