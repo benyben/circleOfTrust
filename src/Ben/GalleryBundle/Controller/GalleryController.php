@@ -28,9 +28,8 @@ class GalleryController extends Controller
         $category = $this->getDoctrine()->getRepository('BenGalleryBundle:Category');
         $categories = $category->findAll();
 
-
-
-
+        $med = $this->getDoctrine()->getRepository('BenGalleryBundle:Media');
+        $med->find(1);
 
 
         return $this->render('BenGalleryBundle:Gallery:index.html.twig',array(
@@ -56,11 +55,7 @@ class GalleryController extends Controller
         //récupération de tous les médias
         $listMedias = $em->getRepository('BenGalleryBundle:Media')->findAll();
 
-        foreach ($listMedias as $media){
-            $category->addMedia($media);
-
-
-        }
+       
 
         $em->flush();
 

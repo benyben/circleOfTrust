@@ -2,6 +2,7 @@
 
 namespace Ben\GalleryBundle\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -11,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Media
  *
  * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Ben\GalleryBundle\Entity\MediaRepository")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
@@ -38,7 +40,6 @@ class Media
      * @var UploadedFile file
      */
     private $file;
-
 
     /**
      * @ORM\ManyToMany(targetEntity="Ben\GalleryBundle\Entity\Category", cascade={"persist"})
@@ -86,7 +87,7 @@ class Media
 
         //récupération de l'alt
         $this->alt = $this->file->getClientOriginalName();
-        
+
     }
 
 
@@ -226,4 +227,28 @@ class Media
     }
 
 
+
+    /**
+     * Add category
+     *
+     * @param \Ben\GalleryBundle\Entity\Category $category
+     *
+     * @return Media
+     */
+    public function addCategory(\Ben\GalleryBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Ben\GalleryBundle\Entity\Category $category
+     */
+    public function removeCategory(\Ben\GalleryBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
 }
