@@ -12,14 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class MediaRepository extends EntityRepository
 {
-    public function findMediasByCategory()
+    public function findMediasByCategory($id)
     {
-        return $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('m')
-            ->from('BenGalleryBundle:Media', 'm')
-            ->innerJoin('m.categories', 'c')
-            ->where('c.id = 1')
+        return $this->createQueryBuilder('m')
+            ->addSelect('c')
+            ->join('m.categories','c','WITH' ,'c.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
             ->getResult();
     }

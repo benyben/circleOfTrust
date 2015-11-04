@@ -29,7 +29,9 @@ class GalleryController extends Controller
         $categories = $category->findAll();
 
         $med = $this->getDoctrine()->getRepository('BenGalleryBundle:Media');
-        $pictures = $med->findMediasByCategory();
+        $pictures = $med->findMediasByCategory(1);
+
+
 
 
 
