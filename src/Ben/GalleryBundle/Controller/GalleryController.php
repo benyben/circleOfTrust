@@ -34,7 +34,6 @@ class GalleryController extends Controller
 
 
 
-
         return $this->render('BenGalleryBundle:Gallery:index.html.twig',array(
             'form' => $form->createView(),
             'media' => $media,
@@ -65,5 +64,7 @@ class GalleryController extends Controller
 
        return $this->redirect('gallery_home');
     }
+
+
 
 }

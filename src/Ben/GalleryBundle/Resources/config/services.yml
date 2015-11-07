@@ -1,0 +1,7 @@
+services:
+    Ben.twig.extension:
+      class: Ben\GalleryBundle\TwigExtension
+      arguments:
+        doctrine: "@doctrine"
+      tags:
+      -{name: twig.extension}
